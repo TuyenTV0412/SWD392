@@ -5,6 +5,10 @@
 
 package Controller;
 
+import Model.Booking;
+import Model.User;
+import Service.BookingTourService;
+import Service.BookingTourServicelmpl;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -12,12 +16,13 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  *
  * @author admin
  */
-public class logoutServlet extends HttpServlet {
+public class BookingTourController extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -34,10 +39,10 @@ public class logoutServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet logoutServlet</title>");  
+            out.println("<title>Servlet BookingTourController</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet logoutServlet at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet BookingTourController at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -54,9 +59,21 @@ public class logoutServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        session.removeAttribute("user");
-        response.sendRedirect("home");
+       HttpSession session = request.getSession();
+    User user = (User) session.getAttribute("user");
+
+    if (user == null) {
+        response.sendRedirect("Login.jsp"); // Nếu chưa đăng nhập, chuyển hướng đến trang đăng nhập
+        return;
+    }
+    int id = user.getUserID();
+    BookingTourService bookingTour = new BookingTourServicelmpl();
+    
+    List<Booking> list = bookingTour.getTourBookingByUserId(id);
+    
+    request.setAttribute("list", list);
+    request.getRequestDispatcher("BookingTour.jsp").forward(request, response);
+    
     } 
 
     /** 

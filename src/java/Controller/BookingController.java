@@ -5,13 +5,14 @@
 
 package Controller;
 
+import Model.Tour;
 import Model.User;
-import Service.UserService;
+import Service.TourService;
+import Service.TourServicelmpl;
 import Service.UserServicelmpl;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -21,7 +22,7 @@ import jakarta.servlet.http.HttpSession;
  *
  * @author admin
  */
-public class LoginServlet extends HttpServlet {
+public class BookingController extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -38,10 +39,10 @@ public class LoginServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LoginServlet</title>");  
+            out.println("<title>Servlet BookingServlet</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet LoginServlet at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet BookingServlet at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -58,7 +59,25 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-       request.getRequestDispatcher("Login.jsp").forward(request, response);
+        int id = Integer.parseInt(request.getParameter("id"));
+
+        
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            request.getRequestDispatcher("Login.jsp").forward(request, response);
+        } else {
+            //get tour
+            TourService tourDAO = new TourServicelmpl();
+            Tour a = tourDAO.getTourDetail(id);
+            
+            int userId = user.getUserID();
+            UserServicelmpl useS = new UserServicelmpl();
+            User u = useS.getUserById(userId);
+            request.setAttribute("user", u);
+            request.setAttribute("tour", a);
+            request.getRequestDispatcher("Booking.jsp").forward(request, response);
+        }
     } 
 
     /** 
@@ -69,49 +88,29 @@ public class LoginServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-         String username = request.getParameter("email");
-        String password = request.getParameter("password");
-//        String remember = request.getParameter("remember");
-//        Cookie cn = new Cookie("cname", username);
-//        Cookie cp = new Cookie("cpass", password);
-//        Cookie cr = new Cookie("crem", remember);
+ protected void doPost(HttpServletRequest request, HttpServletResponse response) 
+            throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
 
-//        if (remember != null) {
-//            cn.setMaxAge(60 * 60 * 24);
-//            cp.setMaxAge(60 * 60 * 24);
-//            cr.setMaxAge(60 * 60 * 24);
-//        } else {
-//            cn.setMaxAge(0);
-//            cp.setMaxAge(0);
-//            cr.setMaxAge(0);
-//        }
+        if (user == null) {
+            response.sendRedirect("login.jsp"); // Chuyển hướng nếu chưa đăng nhập
+            return;
+        }
 
+        int tourId = Integer.parseInt(request.getParameter("tourID"));
+        int statusId = 1; // Mặc định trạng thái đặt chờ duyệt (hoặc lấy từ request)
+         TourService tourDAO = new TourServicelmpl();
+        boolean success = tourDAO.saveTour(user.getUserID(), tourId, statusId);
 
-//        response.addCookie(cr);
-//        response.addCookie(cn);
-//        response.addCookie(cp);
-
-        UserServicelmpl u = new UserServicelmpl();
-        User a = u.Login(username, password);
-        if (a == null) {
-            request.setAttribute("mess", "Username or Password incorrect");
-            request.getRequestDispatcher("Login.jsp").forward(request, response);
+        if (success) {
+            
+            response.sendRedirect("home"); // Chuyển đến trang thành công
         } else {
-            if (a.getRole()== 1) {
-                HttpSession session = request.getSession();
-                session.setAttribute("user", a);
-                response.sendRedirect("adminHome.jsp");
-            } else {
-                HttpSession session = request.getSession();
-                session.setAttribute("user", a);
-                response.sendRedirect("home");
-            }
-
-
+            response.sendRedirect("bookingFailed.jsp"); // Chuyển đến trang thất bại
         }
     }
+    
 
     /** 
      * Returns a short description of the servlet.

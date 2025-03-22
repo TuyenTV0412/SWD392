@@ -2,27 +2,39 @@
 <web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
-        <servlet-class>Controller.LoginServlet</servlet-class>
+        <servlet-class>Controller.LoginController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ProfileServlet</servlet-name>
-        <servlet-class>Controller.ProfileServlet</servlet-class>
+        <servlet-class>Controller.ProfileController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>HomeService</servlet-name>
-        <servlet-class>Controller.HomeService</servlet-class>
+        <servlet-class>Controller.HomeController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>TourDetailServlet</servlet-name>
-        <servlet-class>Controller.TourDetailServlet</servlet-class>
+        <servlet-class>Controller.TourDetailController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>logoutServlet</servlet-name>
-        <servlet-class>Controller.logoutServlet</servlet-class>
+        <servlet-class>Controller.logoutController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>BookingServlet</servlet-name>
-        <servlet-class>Controller.BookingServlet</servlet-class>
+        <servlet-class>Controller.BookingController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UserController</servlet-name>
+        <servlet-class>Controller.UserController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>BookingTourController</servlet-name>
+        <servlet-class>Controller.BookingTourController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CancelTourController</servlet-name>
+        <servlet-class>Controller.CancelTourController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
@@ -47,5 +59,17 @@
     <servlet-mapping>
         <servlet-name>BookingServlet</servlet-name>
         <url-pattern>/booking</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserController</servlet-name>
+        <url-pattern>/changePass</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BookingTourController</servlet-name>
+        <url-pattern>/bookingTour</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CancelTourController</servlet-name>
+        <url-pattern>/cancelTour</url-pattern>
     </servlet-mapping>
 </web-app>

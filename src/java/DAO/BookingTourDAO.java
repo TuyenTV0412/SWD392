@@ -4,19 +4,18 @@
  */
 package DAO;
 
-import Model.User;
+import Model.Booking;
+import java.util.List;
 
 /**
  *
  * @author admin
  */
-public interface UserDAO {
+public interface BookingTourDAO {
+    public List<Booking> getTourBookingByUserId(int id);
     
-    public User Login(String username, String pass);
+    public Booking getTourBookingById(int id);
     
-    public User getUserById(int id);
-       
-    public boolean updateProfile(User user);
+    public boolean updateStatusTour(int id);
     
-    public boolean updatePassword(int id , String pass);
 }
