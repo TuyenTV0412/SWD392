@@ -122,7 +122,7 @@
                         <a href="login" class="btn-profile">Login</a>
                     </c:when>
                     <c:otherwise>
-                        <a href="profile" class="btn-profile">Profile</a>
+                        <a href="profile" class="btn-profile">Account</a>
                         <a href="logout" class="btn-logout">Logout</a>
                     </c:otherwise>
                 </c:choose>

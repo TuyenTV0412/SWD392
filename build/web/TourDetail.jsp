@@ -151,12 +151,10 @@ body {
         <!-- Header -->
         <div class="header">
             <div class="logo">
-                <img src="img/logo.png" alt="Logo" class="logo-img">
                 <span class="logo-text">BookingTour</span>
             </div>
-            <div class="user-info">
-                <img src="img/user-icon.png" alt="User Icon" class="user-icon">
-                <span>Nguyen Van A</span>
+            <div class="user-info"> 
+                <span>User</span>
             </div>
         </div>
 

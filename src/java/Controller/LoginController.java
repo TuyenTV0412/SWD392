@@ -5,9 +5,13 @@
 
 package Controller;
 
+import Model.User;
+import Service.UserService;
+import Service.UserServicelmpl;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -17,7 +21,7 @@ import jakarta.servlet.http.HttpSession;
  *
  * @author admin
  */
-public class logoutServlet extends HttpServlet {
+public class LoginController extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -34,10 +38,10 @@ public class logoutServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet logoutServlet</title>");  
+            out.println("<title>Servlet LoginServlet</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet logoutServlet at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet LoginServlet at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -54,9 +58,7 @@ public class logoutServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        session.removeAttribute("user");
-        response.sendRedirect("home");
+       request.getRequestDispatcher("Login.jsp").forward(request, response);
     } 
 
     /** 
@@ -69,7 +71,46 @@ public class logoutServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+         String username = request.getParameter("email");
+        String password = request.getParameter("password");
+//        String remember = request.getParameter("remember");
+//        Cookie cn = new Cookie("cname", username);
+//        Cookie cp = new Cookie("cpass", password);
+//        Cookie cr = new Cookie("crem", remember);
+
+//        if (remember != null) {
+//            cn.setMaxAge(60 * 60 * 24);
+//            cp.setMaxAge(60 * 60 * 24);
+//            cr.setMaxAge(60 * 60 * 24);
+//        } else {
+//            cn.setMaxAge(0);
+//            cp.setMaxAge(0);
+//            cr.setMaxAge(0);
+//        }
+
+
+//        response.addCookie(cr);
+//        response.addCookie(cn);
+//        response.addCookie(cp);
+
+        UserServicelmpl u = new UserServicelmpl();
+        User a = u.Login(username, password);
+        if (a == null) {
+            request.setAttribute("mess", "Username or Password incorrect");
+            request.getRequestDispatcher("Login.jsp").forward(request, response);
+        } else {
+            if (a.getRole()== 1) {
+                HttpSession session = request.getSession();
+                session.setAttribute("user", a);
+                response.sendRedirect("adminHome.jsp");
+            } else {
+                HttpSession session = request.getSession();
+                session.setAttribute("user", a);
+                response.sendRedirect("home");
+            }
+
+
+        }
     }
 
     /** 

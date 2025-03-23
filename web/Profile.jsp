@@ -209,8 +209,9 @@
         <!-- Sidebar -->
         <div class="sidebar">
             <h2>Quản Lý</h2>
-            <a href="profile.jsp">Thông Tin Tài Khoản</a>
+            <a href="profile">Thông Tin Tài Khoản</a>
             <a href="changePass.jsp">Đổi Mật Khẩu</a>
+            <a href="bookingTour">Tour đã đặt</a>
             <a href="home">Quay Về</a>
         </div>
 
@@ -219,14 +220,7 @@
             <h2>THÔNG TIN TÀI KHOẢN</h2>
            
             <div class="profile-info">
-                 <%
-                           String mess = (String) request.getAttribute("errorMessage");
-                           if (mess != null) {
-                    %>
-                    <p style="color: red" id="message">${mess}</p>
-                    <%
-                        }
-                    %>
+                <h5 style="color: greenyellow">${mess}</h5>
                 <p><strong>Tên Tài Khoản</strong>: ${user.fullName}</p>
                 <p><strong>Email</strong>: ${user.email}</p>
                 <p><strong>Số Điện Thoại</strong>: ${user.phone}</p>
@@ -259,42 +253,29 @@
         </div>
     </div>
 
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const modal = document.getElementById("myModal");
+        const openModalBtn = document.getElementById("openModalBtn");
+        const closeModalBtn = document.getElementById("closeModalBtn");
 
-    <script>
-        // Get modal element
-        var modal = document.getElementById("myModal");
-        var openModalBtn = document.getElementById("openModalBtn");
-        var closeModalBtn = document.getElementById("closeModalBtn");
-
-        // Open modal when the "Chỉnh sửa" button is clicked
-        openModalBtn.onclick = function() {
+        openModalBtn.addEventListener("click", function(event) {
+            event.preventDefault(); // Ngăn chặn chuyển hướng nếu là thẻ `<a>`
             modal.style.display = "block";
-        }
+        });
 
-        // Close modal when the "x" button is clicked
-        closeModalBtn.onclick = function() {
+        closeModalBtn.addEventListener("click", function() {
             modal.style.display = "none";
-        }
+        });
 
-        // Close modal if user clicks outside the modal
-        window.onclick = function(event) {
-            if (event.target == modal) {
+        window.addEventListener("click", function(event) {
+            if (event.target === modal) {
                 modal.style.display = "none";
             }
-        }
+        });
+    });
+</script>
 
-        // Hàm để ẩn thông báo sau 2 giây
-            function hideMessage() {
-                var messageElement = document.getElementById("message");
-                if (messageElement) {
-                    setTimeout(function () {
-                        messageElement.style.display = "none";
-                    }, 2000); // 2 giây
-                }
-            }
 
-            // Gọi hàm hideMessage khi trang đã tải xong
-            window.onload = hideMessage;
-    </script>
 </body>
 </html>

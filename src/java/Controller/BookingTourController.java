@@ -5,11 +5,9 @@
 
 package Controller;
 
-import Model.Tour;
+import Model.Booking;
 import Model.User;
-import Service.TourService;
-import Service.TourServicelmpl;
-import Service.UserServicelmpl;
+import Service.BookingServicelmpl;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -17,12 +15,14 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.List;
+import Service.BookingService;
 
 /**
  *
  * @author admin
  */
-public class BookingServlet extends HttpServlet {
+public class BookingTourController extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -39,10 +39,10 @@ public class BookingServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet BookingServlet</title>");  
+            out.println("<title>Servlet BookingTourController</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet BookingServlet at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet BookingTourController at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -59,25 +59,16 @@ public class BookingServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        int id = Integer.parseInt(request.getParameter("id"));
-
-        
-        HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("user");
-        if (user == null) {
-            request.getRequestDispatcher("Login.jsp").forward(request, response);
-        } else {
-            //get tour
-            TourService tourDAO = new TourServicelmpl();
-            Tour a = tourDAO.getTourDetail(id);
-            
-            int userId = user.getUserID();
-            UserServicelmpl useS = new UserServicelmpl();
-            User u = useS.getUserById(userId);
-            request.setAttribute("user", u);
-            request.setAttribute("tour", a);
-            request.getRequestDispatcher("BookingTour.jsp").forward(request, response);
-        }
+       HttpSession session = request.getSession();
+    User user = (User) session.getAttribute("user");
+    int id = user.getUserID();
+    BookingService bookingTour = new BookingServicelmpl();
+    
+    List<Booking> list = bookingTour.getTourBookingByUserId(id);
+    
+    request.setAttribute("list", list);
+    request.getRequestDispatcher("BookingTour.jsp").forward(request, response);
+    
     } 
 
     /** 
@@ -88,29 +79,10 @@ public class BookingServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
- protected void doPost(HttpServletRequest request, HttpServletResponse response) 
-            throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("user");
-
-        if (user == null) {
-            response.sendRedirect("login.jsp"); // Chuyển hướng nếu chưa đăng nhập
-            return;
-        }
-
-        int tourId = Integer.parseInt(request.getParameter("tourID"));
-        int statusId = 1; // Mặc định trạng thái đặt chờ duyệt (hoặc lấy từ request)
-         TourService tourDAO = new TourServicelmpl();
-        boolean success = tourDAO.saveTour(user.getUserID(), tourId, statusId);
-
-        if (success) {
-            
-            response.sendRedirect("home"); // Chuyển đến trang thành công
-        } else {
-            response.sendRedirect("bookingFailed.jsp"); // Chuyển đến trang thất bại
-        }
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    throws ServletException, IOException {
+        processRequest(request, response);
     }
-    
 
     /** 
      * Returns a short description of the servlet.

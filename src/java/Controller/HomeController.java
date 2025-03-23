@@ -5,21 +5,22 @@
 
 package Controller;
 
+import DAO.TourDAOlmpl;
 import Model.Tour;
-import Service.TourService;
-import Service.TourServicelmpl;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author admin
  */
-public class TourDetailServlet extends HttpServlet {
+public class HomeController extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -36,10 +37,10 @@ public class TourDetailServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet TourDetailServlet</title>");  
+            out.println("<title>Servlet HomeService</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet TourDetailServlet at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet HomeService at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -56,13 +57,13 @@ public class TourDetailServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-       int id = Integer.parseInt(request.getParameter("id"));
-        TourService tourDAO = new TourServicelmpl();
-        Tour a = tourDAO.getTourDetail(id);
+        TourDAOlmpl tDAO = new TourDAOlmpl();
+        List<Tour> t = new ArrayList<>();
         
-        request.setAttribute("tour", a);
-        request.setAttribute("id", id);
-        request.getRequestDispatcher("TourDetail.jsp").forward(request, response);
+        t = tDAO.getAllTour();
+        
+        request.setAttribute("tour", t);
+        request.getRequestDispatcher("Home.jsp").forward(request, response);
     } 
 
     /** 

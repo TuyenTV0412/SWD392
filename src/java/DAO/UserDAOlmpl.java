@@ -25,7 +25,7 @@ public class UserDAOlmpl extends DBContext implements UserDAO {
         Date xCreateAt;
         User x = null;
         try {
-            PreparedStatement st = connection.prepareStatement(sql);
+            PreparedStatement st = connection.prepareStatement (sql);
             st.setString(1, Email);
             st.setString(2, PasswordHash);
             ResultSet rs = st.executeQuery();
@@ -77,7 +77,7 @@ public class UserDAOlmpl extends DBContext implements UserDAO {
     }
 
     @Override
-    public boolean updateProfile(User user) {
+    public boolean updateUserById(User user) {
         String sql = "UPDATE Users SET FullName = ?, Email = ?, Phone = ?, WHERE UserID = ?";
         boolean isUpdated = false;
 
@@ -105,16 +105,19 @@ public class UserDAOlmpl extends DBContext implements UserDAO {
 
     @Override
     public boolean updatePassword(int id, String pass) {
-         String sql = "UPDATE Users SET Password = ? WHERE UserID = ?";
+         String sql = "UPDATE Users SET PasswordHash = ? WHERE UserID = ?";
+         boolean isUpdated = false;
         try (PreparedStatement st = connection.prepareStatement(sql)) {
             st.setString(1, pass);
             st.setInt(2, id);
-            int rowsUpdated = st.executeUpdate();
-            return rowsUpdated > 0;  // Return true if at least one row was updated
+            int rowsUpdated = st.executeUpdate(); 
+            if(rowsUpdated > 0){
+                isUpdated = true;
+            }
         } catch (SQLException e) {
             e.printStackTrace();  // Use printStackTrace() instead of System.out.println()
         }
-        return false;
+        return isUpdated;
     }
     
     
@@ -122,8 +125,9 @@ public class UserDAOlmpl extends DBContext implements UserDAO {
         User a = new User();
         UserDAOlmpl u = new UserDAOlmpl();
 //            a = u.Login("user@gamil.com", "hashedpassword123");
-        a = u.getUserById(1);
-        System.out.println(a);
+//        a = u.getUserById(1);
+         boolean b = u.updatePassword(2, "1234");
+        System.out.println(b);
 
     }
         

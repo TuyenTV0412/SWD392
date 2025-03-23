@@ -1,208 +1,254 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page contentType="text/html" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
     <head>
-        <meta charset="UTF-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Đặt Tour</title>
+        <title>Tour Đã Đặt</title>
         <style>
-            body {
-                font-family: Arial, sans-serif;
-                margin: 0;
-                padding: 0;
-                background-color: #f4f4f4;
-            }
-
             .container {
-                max-width: 1200px;
-                margin: 0 auto;
-                padding: 20px;
+                display: flex;
+                min-height: 100vh;
             }
 
-            .header {
+            .sidebar {
+                width: 250px;
+                background-color: #e0e0e0;
+                padding: 20px;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .sidebar h2 {
+                color: #333;
+                font-size: 24px;
+                margin: 0;
+            }
+
+            .sidebar a {
+                text-decoration: none;
+                color: #000;
+                padding: 10px;
+                margin-top: 15px;
+                border-radius: 5px;
+                background-color: #dcdcdc;
+            }
+
+            .sidebar a:hover {
+                background-color: #4caf50;
+                color: white;
+            }
+
+            .booking-section {
+                flex: 1;
+                padding: 20px;
+                background-color: #00bcd4;
+            }
+
+            .booking-section h2 {
+                color: white;
+                text-align: center;
+                font-size: 28px;
+                margin-bottom: 20px;
+            }
+
+            .booking-list {
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .booking-card {
+                background-color: #fff;
+                border-radius: 8px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                overflow: hidden;
+                display: flex;
+            }
+
+            .booking-image {
+                width: 200px;
+                height: 150px;
+                object-fit: cover;
+            }
+
+            .booking-details {
+                padding: 15px;
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+            }
+
+            .booking-title {
+                font-size: 20px;
+                font-weight: bold;
+                color: #333;
+                margin-bottom: 10px;
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                background-color: #00bfff;
-                padding: 10px 20px;
-                border-radius: 8px;
             }
 
-            .logo {
-                display: flex;
-                align-items: center;
-            }
-
-            .logo-img {
-                width: 50px;
-                height: 50px;
-            }
-
-            .logo-text {
-                font-size: 24px;
+            .detail-btn {
+                display: inline-block;
+                background-color: #2196f3;
+                color: white;
+                padding: 5px 15px;
+                border-radius: 4px;
+                text-decoration: none;
                 font-weight: bold;
-                color: #fff;
-                margin-left: 10px;
+                margin-left: auto;
             }
 
-            .user-info {
-                display: flex;
-                align-items: center;
+
+            .booking-info {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
             }
 
-            .user-icon {
-                width: 40px;
-                height: 40px;
+            .booking-price {
+                color: #e91e63;
+                font-weight: bold;
+                font-size: 18px;
             }
 
-            .user-info span {
-                margin-left: 10px;
-                font-size: 16px;
-                color: #fff;
+            .booking-date {
+                color: #555;
             }
 
-            .main-content {
-                display: flex;
-                margin-top: 20px;
-                gap: 20px;
+            .booking-status {
+                display: inline-block;
+                padding: 5px 10px;
+                border-radius: 20px;
+                font-size: 14px;
+                font-weight: bold;
             }
 
-            .tour-info {
-                flex: 4;
-                background-color: #e6f7ff;
+            .status-pending {
+                background-color: yellow;
+                color: #333;
+            }
+
+            .status-confirmed {
+                background-color: yellow;
+                color: white;
+            }
+
+            .status-cancelled {
+                background-color: greenyellow;
+                color: white;
+            }
+
+            .status-completed {
+                background-color: red;
+                color: white;
+            }
+
+            .no-bookings {
+                text-align: center;
+                background-color: #fff;
                 padding: 20px;
                 border-radius: 8px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             }
 
-            .tour-info h2 {
-                font-size: 28px;
-                color: #007bff;
-            }
-
-            .tour-info p {
-                font-size: 16px;
-                margin-bottom: 10px;
-            }
-
-            .tour-info img {
-                width: 100%;
-                height: auto;
-                border-radius: 8px;
-            }
-
-            .price {
-                font-size: 18px;
-                color: #ff4500;
+            .detail-btn {
+                display: inline-block;
+                background-color: #2196f3;
+                color: white;
+                padding: 5px 15px;
+                border-radius: 4px;
+                text-decoration: none;
+                margin-top: 5px;
                 font-weight: bold;
+                float: right;
             }
 
-            .customer-info {
-                flex: 8;
-                background-color: #b3e0ff;
-                padding: 30px;
-                border-radius: 8px;
-                font-size: 20px;
+            .detail-btn:hover {
+                background-color: #0b7dda;
             }
 
-            .customer-info h2 {
-                font-size: 28px;
-                text-align: center;
-                font-weight: bold;
-            }
-
-            .customer-info p {
-                font-size: 22px;
-                margin-bottom: 15px;
-                font-weight: bold;
-            }
-
-            .customer-info span {
-                display: block;
-                background-color: #87CEEB;
-                padding: 15px;
-                border-radius: 8px;
-                text-align: center;
-                margin-bottom: 20px;
-                font-size: 22px;
-                font-weight: bold;
-            }
-
-            .buttons {
+            .action-buttons {
+                margin-top: 10px;
                 display: flex;
-                justify-content: center;
-                gap: 20px;
-                margin-top: 20px;
-            }
-
-            .btn {
-                padding: 15px 30px;
-                font-size: 18px;
-                font-weight: bold;
-                border: none;
-                border-radius: 8px;
-                cursor: pointer;
-                transition: 0.3s;
-            }
-
-            .btn-book {
-                background-color: #28a745;
-                color: white;
-            }
-
-            .btn-book:hover {
-                background-color: #218838;
-            }
-
-            .btn-back {
-                background-color: #dc3545;
-                color: white;
-            }
-
-            .btn-back:hover {
-                background-color: #c82333;
+                justify-content: flex-end;
             }
         </style>
+
     </head>
     <body>
-
         <div class="container">
-            <div class="header">
-                <div class="logo">
-                    <img src="img/logo.png" alt="Logo" class="logo-img">
-                    <span class="logo-text">BookingTour</span>
-                </div>
-                <div class="user-info">
-                    <img src="img/user-icon.png" alt="User Icon" class="user-icon">
-                    <span>${user.fullName}</span>
-                </div>
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <h2>Quản Lý</h2>
+                <a href="profile">Thông Tin Tài Khoản</a>
+                <a href="changePass.jsp">Đổi Mật Khẩu</a>
+                <a href="bookingTour">Tour đã đặt</a>
+                <a href="home">Quay Về</a>
             </div>
 
-            <div class="main-content">
-                <div class="tour-info">
-                    <h2>${tour.tourName}</h2>
-                    <img src="img/${tour.image}" alt="${tour.tourName}" />
-                    <p><strong>Địa Điểm:</strong> ${tour.tourName}</p>
-                    <p><strong>Ngày Bắt Đầu:</strong> ${tour.startDate}</p>
-                    <p><strong>Ngày Kết Thúc:</strong> ${tour.endDate}</p>
-                    <p class="price"><strong>Giá:</strong> ${tour.price} VND</p>
-                    <p><strong>Mô Tả:</strong> ${tour.description}</p>
-                </div>
+            <!-- Booking Section -->
+            <!-- Booking Section -->
+            <div class="booking-section">
+                <h2>TOUR ĐÃ ĐẶT</h2>
 
-                <div class="customer-info">
-                    <h2>Thông Tin Khách Hàng</h2>
-                    <span>${user.fullName}</span>
-                    <span>${user.email}</span>
-                    <span>${user.phone}</span>
-                    <form action="booking" method="POST" class="modal-form">
-                        <input type="hidden" name="tourID" value="${tour.tourID}">
-                        <div class="buttons">
-                            <button type="submit" class="btn btn-book">Đặt Tour</button>
-                            <a href="home" class="btn btn-back">Quay Lại</a>
+                <div class="booking-list">
+                    <c:if test="${empty list}">
+                        <div class="no-bookings">
+                            <p>Bạn chưa đặt tour nào.</p>
                         </div>
-                    </form>
+                    </c:if>
+
+                    <c:forEach var="booking" items="${list}">
+                        <div class="booking-card">
+                            <img src="img/${booking.image}" alt="${booking.tourName}" class="booking-image">
+                            <div class="booking-details">
+                                <div class="booking-title">${booking.tourName}</div>
+                                <div class="booking-info">
+                                    <div>
+                                        <p><strong>Mô tả:</strong> ${booking.description}</p>
+                                        <p><strong>Ngày bắt đầu:</strong> <fmt:formatDate value="${booking.startDate}" pattern="dd/MM/yyyy"/></p>
+                                        <p><strong>Ngày kết thúc:</strong> <fmt:formatDate value="${booking.endDate}" pattern="dd/MM/yyyy"/></p>
+                                    </div>
+                                    <div>
+                                        <p class="booking-price"><strong>Giá:</strong> ${booking.price} VND</p>
+                                        <p class="booking-date"><strong>Ngày đặt:</strong> <fmt:formatDate value="${booking.bookingDate}" pattern="dd/MM/yyyy"/></p>
+                                        <p>
+                                            <strong>Trạng thái:</strong> 
+                                            <c:choose>
+                                                <c:when test="${booking.statusId == 1}">
+                                                    <span class="booking-status status-pending">${booking.statusName}</span>
+                                                </c:when>
+                                                <c:when test="${booking.statusId == 2}">
+                                                    <span class="booking-status status-confirmed">${booking.statusName}</span>
+                                                </c:when>
+                                                <c:when test="${booking.statusId == 3}">
+                                                    <span class="booking-status status-cancelled">${booking.statusName}</span>
+                                                </c:when>
+                                                <c:when test="${booking.statusId == 4}">
+                                                    <span class="booking-status status-completed">${booking.statusName}</span>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <span class="booking-status">${booking.statusName}</span>
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </p>
+                                        <div class="booking-title">
+                                            <a href="cancelTour?id=${booking.bookingId}" class="detail-btn">Chi tiết</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </c:forEach>
                 </div>
             </div>
         </div>
-    </body>
+
+    </div>
+</body>
 </html>

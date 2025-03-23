@@ -4,18 +4,19 @@
  */
 package Service;
 
-import Model.User;
+import Model.Booking;
+import java.util.List;
 
 /**
  *
  * @author admin
  */
-public interface UserService {
-    public User Login(String username, String pass);
+public interface BookingService {
+
+    public List<Booking> getTourBookingByUserId(int id);
     
-    public User getUserById(int id);
-    
-    public boolean updateUserById(User user);
-    
-    public boolean updatePassword(int id , String pass);
+    public Booking getTourBookingById(int id);
+
+    public boolean updateStatusTour(int id);
+
 }
