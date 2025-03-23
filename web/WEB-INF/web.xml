@@ -24,6 +24,14 @@
         <servlet-name>BookingServlet</servlet-name>
         <servlet-class>Controller.BookingServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>HotelServlettt</servlet-name>
+        <servlet-class>Controller.HotelServlettt</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>HotelServlet</servlet-name>
+        <servlet-class>Controller.HotelServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -47,5 +55,13 @@
     <servlet-mapping>
         <servlet-name>BookingServlet</servlet-name>
         <url-pattern>/booking</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>HotelServlettt</servlet-name>
+        <url-pattern>/HotelServlettt</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>HotelServlet</servlet-name>
+        <url-pattern>/servlethotel</url-pattern>
     </servlet-mapping>
 </web-app>
