@@ -209,7 +209,7 @@
         <!-- Sidebar -->
         <div class="sidebar">
             <h2>Quản Lý</h2>
-            <a href="profile.jsp">Thông Tin Tài Khoản</a>
+            <a href="profile">Thông Tin Tài Khoản</a>
             <a href="changePass.jsp">Đổi Mật Khẩu</a>
             <a href="bookingTour">Tour đã đặt</a>
             <a href="home">Quay Về</a>
@@ -253,6 +253,28 @@
         </div>
     </div>
 
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const modal = document.getElementById("myModal");
+        const openModalBtn = document.getElementById("openModalBtn");
+        const closeModalBtn = document.getElementById("closeModalBtn");
+
+        openModalBtn.addEventListener("click", function(event) {
+            event.preventDefault(); // Ngăn chặn chuyển hướng nếu là thẻ `<a>`
+            modal.style.display = "block";
+        });
+
+        closeModalBtn.addEventListener("click", function() {
+            modal.style.display = "none";
+        });
+
+        window.addEventListener("click", function(event) {
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        });
+    });
+</script>
 
 
 </body>

@@ -56,10 +56,8 @@ public class ProfileController extends HttpServlet {
             if (isUpdated) {
                 session.setAttribute("user", user);
 
-                request.setAttribute("mess", "Cập nhật thành công.");
                 request.getRequestDispatcher("profile").forward(request, response);
             } else {
-                request.setAttribute("mess", "Cập nhật không thành công. Vui lòng thử lại.");
                 request.getRequestDispatcher("Profile.jsp").forward(request, response);
             }
         }

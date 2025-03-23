@@ -2,38 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Users/admin/Documents/NetBeansProjects/SWD392/src/java/Service/TourService.java</file>
-            <file>file:/C:/Users/admin/Documents/NetBeansProjects/SWD392/web/Profile.jsp</file>
-            <file>file:/C:/Users/admin/Documents/NetBeansProjects/SWD392/web/TourDetail.jsp</file>
-            <file>file:/C:/Users/admin/Documents/NetBeansProjects/SWD392/src/java/Service/TourServicelmpl.java</file>
-            <file>file:/C:/Users/admin/Documents/NetBeansProjects/SWD392/src/java/Service/UserServicelmpl.java</file>
-            <file>file:/C:/Users/admin/Documents/NetBeansProjects/SWD392/src/java/Model/User.java</file>
-            <file>file:/C:/Users/admin/Documents/NetBeansProjects/SWD392/src/java/Controller/TourDetailController.java</file>
-            <file>file:/C:/Users/admin/Documents/NetBeansProjects/SWD392/src/java/DAO/TourDAOlmpl.java</file>
-            <file>file:/C:/Users/admin/Documents/NetBeansProjects/SWD392/src/java/Controller/BookingController.java</file>
-            <file>file:/C:/Users/admin/Documents/NetBeansProjects/SWD392/src/java/Controller/ProfileController.java</file>
-            <file>file:/C:/Users/admin/Documents/NetBeansProjects/SWD392/web/WEB-INF/web.xml</file>
-            <file>file:/C:/Users/admin/Documents/NetBeansProjects/SWD392/src/java/Service/BookingTourService.java</file>
-            <file>file:/C:/Users/admin/Documents/NetBeansProjects/SWD392/src/java/Model/Tour.java</file>
-            <file>file:/C:/Users/admin/Documents/NetBeansProjects/SWD392/web/BookingTour.jsp</file>
-            <file>file:/C:/Users/admin/Documents/NetBeansProjects/SWD392/src/java/DAO/TourDAO.java</file>
-            <file>file:/C:/Users/admin/Documents/NetBeansProjects/SWD392/src/java/Controller/UserController.java</file>
-            <file>file:/C:/Users/admin/Documents/NetBeansProjects/SWD392/src/java/Controller/BookingTourController.java</file>
-            <file>file:/C:/Users/admin/Documents/NetBeansProjects/SWD392/src/java/DAO/BookingTourDAO.java</file>
-            <file>file:/C:/Users/admin/Documents/NetBeansProjects/SWD392/web/Booking.jsp</file>
-            <file>file:/C:/Users/admin/Documents/NetBeansProjects/SWD392/src/java/Controller/logoutController.java</file>
-            <file>file:/C:/Users/admin/Documents/NetBeansProjects/SWD392/web/changePass.jsp</file>
-            <file>file:/C:/Users/admin/Documents/NetBeansProjects/SWD392/src/java/DAO/BookingTourDAOlmpl.java</file>
-            <file>file:/C:/Users/admin/Documents/NetBeansProjects/SWD392/src/java/Controller/HomeController.java</file>
-            <file>file:/C:/Users/admin/Documents/NetBeansProjects/SWD392/web/Login.jsp</file>
-            <file>file:/C:/Users/admin/Documents/NetBeansProjects/SWD392/src/java/Model/Booking.java</file>
-            <file>file:/C:/Users/admin/Documents/NetBeansProjects/SWD392/src/java/DAO/UserDAOlmpl.java</file>
-            <file>file:/C:/Users/admin/Documents/NetBeansProjects/SWD392/src/java/Service/UserService.java</file>
-            <file>file:/C:/Users/admin/Documents/NetBeansProjects/SWD392/src/java/Service/BookingTourServicelmpl.java</file>
-            <file>file:/C:/Users/admin/Documents/NetBeansProjects/SWD392/web/Home.jsp</file>
-            <file>file:/C:/Users/admin/Documents/NetBeansProjects/SWD392/src/java/Controller/LoginController.java</file>
-            <file>file:/C:/Users/admin/Documents/NetBeansProjects/SWD392/src/java/DAO/UserDAO.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

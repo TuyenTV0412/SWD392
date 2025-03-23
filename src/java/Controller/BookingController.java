@@ -94,20 +94,20 @@ public class BookingController extends HttpServlet {
         User user = (User) session.getAttribute("user");
 
         if (user == null) {
-            response.sendRedirect("login.jsp"); // Chuyển hướng nếu chưa đăng nhập
+            response.sendRedirect("login.jsp"); 
             return;
         }
 
         int tourId = Integer.parseInt(request.getParameter("tourID"));
-        int statusId = 1; // Mặc định trạng thái đặt chờ duyệt (hoặc lấy từ request)
+        int statusId = 1; 
          TourService tourDAO = new TourServicelmpl();
         boolean success = tourDAO.saveTour(user.getUserID(), tourId, statusId);
 
         if (success) {
             
-            response.sendRedirect("home"); // Chuyển đến trang thành công
+            response.sendRedirect("bookingTour"); 
         } else {
-            response.sendRedirect("bookingFailed.jsp"); // Chuyển đến trang thất bại
+            response.sendRedirect("bookingFailed.jsp"); 
         }
     }
     
