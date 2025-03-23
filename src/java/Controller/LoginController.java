@@ -105,6 +105,7 @@ public class LoginController extends HttpServlet {
                 response.sendRedirect("adminHome.jsp");
             } else {
                 HttpSession session = request.getSession();
+                 session.setAttribute("userID", a.getUserID()); 
                 session.setAttribute("user", a);
                 response.sendRedirect("home");
             }

@@ -25,11 +25,12 @@ public class Booking {
     private Date endDate;
     private String statusName;
     private String image;
+    private Rating rating;
 
     public Booking() {
     }
 
-    public Booking(int bookingId, int userId, int tourId, Date bookingDate, int statusId, String tourName, String description, double price, Date startDate, Date endDate,String statusName, String image) {
+    public Booking(int bookingId, int userId, int tourId, Date bookingDate, int statusId, String tourName, String description, double price, Date startDate, Date endDate, String statusName, String image) {
         this.bookingId = bookingId;
         this.userId = userId;
         this.tourId = tourId;
@@ -52,7 +53,6 @@ public class Booking {
         this.image = image;
     }
 
-    
     public String getStatusName() {
         return statusName;
     }
@@ -141,10 +141,17 @@ public class Booking {
         this.endDate = endDate;
     }
 
+    public Rating getRating() {
+        return rating;
+    }
+
+    public void setRating(Rating rating) {
+        this.rating = rating;
+    }
+
     @Override
     public String toString() {
         return "Booking{" + "bookingId=" + bookingId + ", userId=" + userId + ", tourId=" + tourId + ", bookingDate=" + bookingDate + ", statusId=" + statusId + ", tourName=" + tourName + ", description=" + description + ", price=" + price + ", statusName=" + statusName + ", image=" + image + '}';
     }
 
-    
 }
