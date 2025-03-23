@@ -239,6 +239,9 @@
                                         </p>
                                         <div class="booking-title">
                                             <a href="cancelTour?id=${booking.bookingId}" class="detail-btn">Chi tiết</a>
+                                            <c:if test="${booking.statusId == 3 && booking.rating == null}">
+                                                <a href="feedback?tourID=${booking.tourId}" class="detail-btn">Gửi Phản Hồi</a>
+                                            </c:if>
                                         </div>
                                     </div>
                                 </div>
