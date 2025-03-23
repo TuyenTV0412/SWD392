@@ -5,7 +5,13 @@
 
 package Controller;
 
+import Model.Feedback;
+import Model.Rating;
 import Model.Tour;
+import Service.FeedbackService;
+import Service.FeedbackServiceImpl;
+import Service.RatingService;
+import Service.RatingServiceImpl;
 import Service.TourService;
 import Service.TourServicelmpl;
 import java.io.IOException;
@@ -14,6 +20,10 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -54,16 +64,58 @@ public class TourDetailController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-       int id = Integer.parseInt(request.getParameter("id"));
-        TourService tourDAO = new TourServicelmpl();
-        Tour a = tourDAO.getTourDetail(id);
-        
+    try {
+        int id = Integer.parseInt(request.getParameter("id"));
+
+        TourService tourService = new TourServicelmpl();
+        RatingService ratingService = new RatingServiceImpl();
+        FeedbackService feedbackService = new FeedbackServiceImpl();
+
+        Tour a = tourService.getTourDetail(id);
+
+        List<Rating> ratings = ratingService.getRatingsByTour(id); 
+        List<Feedback> feedbacks = feedbackService.getFeedbacksByTour(id);
+
+        Map<Integer, Map<String, String>> userReviews = new HashMap<>();
+
+        for (Rating r : ratings) {
+            Map<String, String> review = new HashMap<>();
+            review.put("userID", String.valueOf(r.getUserID()));
+            review.put("fullName", r.getFullName()); // Lấy FullName từ Rating
+            review.put("rating", "⭐".repeat(r.getRating()));
+            review.put("comment", ""); 
+            review.put("createdAt", ""); 
+            userReviews.put(r.getUserID(), review);
+        }
+
+        for (Feedback f : feedbacks) {
+            int userID = f.getUserID();
+            userReviews.putIfAbsent(userID, new HashMap<>());
+            Map<String, String> review = userReviews.get(userID);
+            review.put("userID", String.valueOf(userID));
+            review.put("comment", f.getComment());
+            review.put("createdAt", f.getCreatedAt() != null ? f.getCreatedAt().toString() : "");
+            review.putIfAbsent("rating", "Chưa đánh giá");
+        }
+
+        // Gửi dữ liệu sang JSP
         request.setAttribute("tour", a);
         request.setAttribute("id", id);
+        request.setAttribute("userReviews", new ArrayList<>(userReviews.values())); 
+
+        // Chuyển hướng sang trang TourDetail.jsp
         request.getRequestDispatcher("TourDetail.jsp").forward(request, response);
-    } 
+    } catch (NumberFormatException e) {
+        e.printStackTrace();
+        response.sendError(HttpServletResponse.SC_BAD_REQUEST, "ID tour không hợp lệ");
+    } catch (Exception e) {
+        e.printStackTrace();
+        response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Lỗi xử lý dữ liệu");
+    }
+}
+ 
 
     /** 
      * Handles the HTTP <code>POST</code> method.

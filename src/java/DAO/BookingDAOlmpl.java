@@ -5,6 +5,7 @@
 package DAO;
 
 import Model.Booking;
+import Model.Rating;
 import Model.Tour;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
@@ -21,23 +22,25 @@ public class BookingDAOlmpl extends DBContext implements BookingDAO {
 
     @Override
     public List<Booking> getTourBookingByUserId(int id) {
-        String sql = "select * from Bookings b\n"
-                + "join Tours t\n"
-                + "on b.TourID = t.TourID\n"
-                + "join TourImages ti\n"
-                + "on t.TourID =ti.TourID\n"
-                + "join Status s\n"
-                + "on b.StatusID =s.StatusID\n"
-                + "where b.UserID = ?";
+        String sql = "SELECT b.*, t.TourName, t.Description, t.StartDate, t.EndDate, t.Price, "
+                + "ti.ImageURL, s.StatusName, "
+                + "r.RatingID, r.Rating "
+                + // Thêm thông tin từ bảng Ratings
+                "FROM Bookings b "
+                + "JOIN Tours t ON b.TourID = t.TourID "
+                + "JOIN TourImages ti ON t.TourID = ti.TourID "
+                + "JOIN Status s ON b.StatusID = s.StatusID "
+                + "LEFT JOIN Ratings r ON b.UserID = r.UserID AND b.TourID = r.TourID "
+                + // JOIN để lấy Rating (có thể null)
+                "WHERE b.UserID = ?";
+
         List<Booking> bookingList = new ArrayList<>();
 
-        try {
-            PreparedStatement st = connection.prepareStatement(sql);
+        try (PreparedStatement st = connection.prepareStatement(sql)) {
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
 
             while (rs.next()) {
-
                 Booking booking = new Booking();
                 booking.setBookingId(rs.getInt("BookingID"));
                 booking.setUserId(rs.getInt("UserID"));
@@ -51,12 +54,22 @@ public class BookingDAOlmpl extends DBContext implements BookingDAO {
                 booking.setStartDate(rs.getDate("StartDate"));
                 booking.setEndDate(rs.getDate("EndDate"));
                 booking.setPrice(rs.getDouble("Price"));
+
+                // Xử lý rating (có thể NULL)
+                if (rs.getObject("RatingID") != null) {
+                    Rating rating = new Rating();
+                    rating.setRatingID(rs.getInt("RatingID"));
+                    rating.setRating(rs.getInt("Rating"));
+                    booking.setRating(rating);
+                } else {
+                    booking.setRating(null); // Chưa có đánh giá
+                }
+
                 // Thêm vào danh sách
                 bookingList.add(booking);
             }
 
             rs.close();
-            st.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
