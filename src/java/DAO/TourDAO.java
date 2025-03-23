@@ -17,4 +17,11 @@ public interface TourDAO {
     public Tour getTourDetail(int id);
     
      public boolean saveTour(int userId, int tourId, int statusId);
+    Tour getTourByID(int tourID);
+    public boolean addTour(Tour tour);
+    public boolean editTour(Tour tour);
+    public boolean deleteTour(int tourID);
+    List<Tour> searchTours(String keyword);
+    List<Tour> getToursByPage(int pageNumber, int pageSize);
+    int getTotalTours();
 }
