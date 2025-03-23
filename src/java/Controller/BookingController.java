@@ -93,10 +93,7 @@ public class BookingController extends HttpServlet {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
 
-        if (user == null) {
-            response.sendRedirect("login.jsp"); 
-            return;
-        }
+
 
         int tourId = Integer.parseInt(request.getParameter("tourID"));
         int statusId = 1; 

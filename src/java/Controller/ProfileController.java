@@ -37,30 +37,25 @@ public class ProfileController extends HttpServlet {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
 
-        if (user == null) {
-            response.sendRedirect("Login.jsp");
+        String fullName = request.getParameter("fullName");
+        String email = request.getParameter("email");
+        String phone = request.getParameter("phone");
+
+        user.setFullName(fullName);
+        user.setEmail(email);
+        user.setPhone(phone);
+
+        UserService userService = new UserServicelmpl();
+        boolean isUpdated = userService.updateUserById(user);
+
+        if (isUpdated) {
+            session.setAttribute("user", user);
+
+            request.getRequestDispatcher("profile").forward(request, response);
         } else {
-            
-            String fullName = request.getParameter("fullName");
-            String email = request.getParameter("email");
-            String phone = request.getParameter("phone");
-
-          
-            user.setFullName(fullName);
-            user.setEmail(email);
-            user.setPhone(phone);
-
-            UserService userService = new UserServicelmpl();
-            boolean isUpdated = userService.updateProfile(user);
-
-            if (isUpdated) {
-                session.setAttribute("user", user);
-
-                request.getRequestDispatcher("profile").forward(request, response);
-            } else {
-                request.getRequestDispatcher("Profile.jsp").forward(request, response);
-            }
+            request.getRequestDispatcher("Profile.jsp").forward(request, response);
         }
+
     }
 
     @Override

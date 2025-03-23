@@ -17,7 +17,7 @@ import java.util.List;
  *
  * @author admin
  */
-public class BookingTourDAOlmpl extends DBContext implements BookingTourDAO {
+public class BookingDAOlmpl extends DBContext implements BookingDAO {
 
     @Override
     public List<Booking> getTourBookingByUserId(int id) {
@@ -129,7 +129,7 @@ public boolean updateStatusTour(int id) {
     }
 
     public static void main(String[] args) {
-        BookingTourDAOlmpl b = new BookingTourDAOlmpl();
+        BookingDAOlmpl b = new BookingDAOlmpl();
 //        List<Booking> a = b.getTourBookingByUserId(2);
 //
 //        for (Booking c : a) {

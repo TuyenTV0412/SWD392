@@ -16,7 +16,7 @@ public interface UserDAO {
     
     public User getUserById(int id);
        
-    public boolean updateProfile(User user);
+    public boolean updateUserById(User user);
     
     public boolean updatePassword(int id , String pass);
 }

@@ -77,7 +77,7 @@ public class UserDAOlmpl extends DBContext implements UserDAO {
     }
 
     @Override
-    public boolean updateProfile(User user) {
+    public boolean updateUserById(User user) {
         String sql = "UPDATE Users SET FullName = ?, Email = ?, Phone = ?, WHERE UserID = ?";
         boolean isUpdated = false;
 

@@ -22,9 +22,9 @@ public class UserServicelmpl implements UserService {
     }
 
     @Override
-    public boolean updateProfile(User user) {
+    public boolean updateUserById(User user) {
         boolean isUpdate;
-        isUpdate = userDAO.updateProfile(user);
+        isUpdate = userDAO.updateUserById(user);
         return isUpdate;
     }
 

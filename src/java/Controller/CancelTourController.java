@@ -5,14 +5,14 @@
 package Controller;
 
 import Model.Booking;
-import Service.BookingTourService;
-import Service.BookingTourServicelmpl;
+import Service.BookingServicelmpl;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import Service.BookingService;
 
 /**
  *
@@ -58,7 +58,7 @@ public class CancelTourController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        BookingTourService bookingTour = new BookingTourServicelmpl();
+        BookingService bookingTour = new BookingServicelmpl();
         int id = Integer.parseInt(request.getParameter("id"));
         Booking booking = bookingTour.getTourBookingById(id);
 
@@ -79,7 +79,7 @@ public class CancelTourController extends HttpServlet {
             throws ServletException, IOException {
 
         int bookingId = Integer.parseInt(request.getParameter("id"));
-        BookingTourService bookingTourService = new BookingTourServicelmpl();
+        BookingService bookingTourService = new BookingServicelmpl();
 
         // Xử lý hủy tour
         boolean isCancelled = bookingTourService.updateStatusTour(bookingId);

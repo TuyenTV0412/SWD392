@@ -4,18 +4,18 @@
  */
 package Service;
 
-import DAO.BookingTourDAO;
-import DAO.BookingTourDAOlmpl;
+import DAO.BookingDAOlmpl;
 import Model.Booking;
 import java.util.List;
+import DAO.BookingDAO;
 
 /**
  *
  * @author admin
  */
-public class BookingTourServicelmpl implements BookingTourService {
+public class BookingServicelmpl implements BookingService {
 
-    BookingTourDAO b = new BookingTourDAOlmpl();
+    BookingDAO b = new BookingDAOlmpl();
 
     @Override
     public List<Booking> getTourBookingByUserId(int id) {
